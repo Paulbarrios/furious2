@@ -5,7 +5,7 @@ var adminsRoutes = require('./routes/admins.routes');
 var mapasRoutes = require('./routes/mapas.routes');
 var videosRoutes = require('./routes/videos.routes');
 var bodyParser  = require('body-parser');
-//pizza avion pizza avion
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
