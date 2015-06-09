@@ -12,7 +12,7 @@ module.exports = function() {
   rutas.get('/videos/aprobados/count' , videosController.count);
   rutas.get('/videos/:id' , videosController.byId);
   rutas.put('/videos/:id', authController.autenticacion, videosController.update);
-  rutas.post('/videos', authController.autenticacion, videosController.crear);
+  rutas.post('/videos', videosController.crear);
   rutas.delete('/videos/:id', authController.autenticacion, videosController.eliminar);
 
   return rutas;

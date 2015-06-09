@@ -30,7 +30,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     aprobado: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
+      allowNull: true,
       defaultValue: '0'
     }
   });

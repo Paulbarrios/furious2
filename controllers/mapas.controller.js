@@ -31,8 +31,8 @@ exports.update = function (req, res) {
       if(mapa == null){
         res.status(404).send({message: 'El mapa no existe o no lo encuentro :...('});
       }else{
-        mapa.updateAttributes({punto_x:req.body.punto_x,
-                         punto_y:req.body.punto_y,
+        mapa.updateAttributes({latitude:req.body.latitude,
+                         longitude:req.body.longitude,
                          nombre:req.body.nombre,
                          calle:req.body.calle,
                          codigo_postal:req.body.codigo_postal,
@@ -47,8 +47,8 @@ exports.update = function (req, res) {
 }
 
 exports.crear = function (req, res) {
-    Mapas.create({punto_x:req.body.punto_x,
-                     punto_y:req.body.punto_y,
+    Mapas.create({latitude:req.body.latitude,
+                     longitude:req.body.longitude,
                      nombre:req.body.nombre,
                      calle:req.body.calle,
                      codigo_postal:req.body.codigo_postal,

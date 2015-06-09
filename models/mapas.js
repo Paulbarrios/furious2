@@ -8,11 +8,11 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true,
     },
-    punto_x: {
+    latitude: {
       type: 'DOUBLE',
       allowNull: false,
     },
-    punto_y: {
+    longitude: {
       type: 'DOUBLE',
       allowNull: false,
     },

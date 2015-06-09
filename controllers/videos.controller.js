@@ -1,7 +1,6 @@
 var Sequelize = require('sequelize');
 var config = require('../config');
 var sequelize = new Sequelize(config.BBDD, config.usuarioBD, config.passwordBD, {host: config.hostBD, port: config.portBD});
-
 var Videos = sequelize.import("../models/videos");
 
 exports.getAll = function (req, res) {
@@ -69,17 +68,29 @@ exports.update = function (req, res) {
 }
 
 exports.crear = function (req, res) {
-    Videos.create({titulo:req.body.titulo,
-                    url_video:req.body.url_video,
-                    url_imagen:req.body.url_imagen,
-                    descripcion:req.body.descripcion,
-                    autor:req.body.autor,
-                    aprobado:req.body.aprobado}).then(function (video) {
-        res.status(201).send({message: 'Video creado con exito.'});
-    }).error(function(err){
-      console.log('Error occured' + err);
-      res.status(400).send({message: 'Algo va mal :('});
-    });
+  var videosIn = JSON.parse(req.body.videos) ;
+
+  sequelize.transaction(function (t1) {
+
+      var queries = [];
+      for (var key in videosIn) {
+        queries.push(Videos.create({titulo:videosIn[key].titulo,
+                            url_video:videosIn[key].url_video,
+                            url_imagen:videosIn[key].url_imagen,
+                            descripcion:videosIn[key].descripcion,
+                            autor:videosIn[key].autor}, { transaction: t1 }));
+      }
+      console.log('dentro');
+      return Promise.all(queries);
+
+  }).then(function (result) {
+    console.log("result");
+      res.status(200).send({message: 'Videos guardados'});
+  }).catch(function (err) {
+    console.log(err);
+      res.status(400).send({message: 'Error al guardar los videos'});
+  });
+
 }
 
 exports.eliminar = function (req, res) {

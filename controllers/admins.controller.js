@@ -1,5 +1,6 @@
 var Sequelize = require('sequelize');
 var jwt = require('jsonwebtoken');
+var passwordHash = require('password-hash');
 var config = require('../config');
 var sequelize = new Sequelize(config.BBDD, config.usuarioBD, config.passwordBD, {host: config.hostBD, port: config.portBD});
 
@@ -47,7 +48,7 @@ exports.update = function (req, res) {
 exports.crear = function (req, res) {
     Admins.create({nombre:req.body.nombre,
                      email:req.body.email,
-                     password:req.body.password}).then(function (admin) {
+                     password:passwordHash.generate(req.body.password)}).then(function (admin) {
         res.status(201).send({message: 'Admin creado con exito.'});
     }).error(function(err){
       console.log('Error occured' + err);
@@ -81,7 +82,7 @@ exports.login = function(req, res) {
       res.json({ success: false, message: 'autenticacion fallida.' });
     } else if (admin) {
 
-      if (admin.password != req.body.password) {
+      if (!passwordHash.verify(req.body.password, admin.password)) {
         res.json({ success: false, message: 'autenticacion fallida.' });
       } else {
 

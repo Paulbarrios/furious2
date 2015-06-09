@@ -8,6 +8,8 @@
     "express": "^4.12.4",
     "jsonwebtoken": "^5.0.1",
     "jwt-simple": "^0.3.0",
+    "node-promise": "^0.5.12",
+    "password-hash": "^1.2.2",
     "sequelize": "^3.0.1"
   },
   "devDependencies": {},
