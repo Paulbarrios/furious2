@@ -20,7 +20,7 @@ app.use('/api', adminsRoutes(), usuariosRoutes(), mapasRoutes(), videosRoutes())
 
 
 var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
-var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '192.168.4.121';
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '46.101.175.98';
 
 app.listen(server_port, server_ip_address, function () {
   console.log( "Listening on " + server_ip_address + ", server_port " + server_port )

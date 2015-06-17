@@ -11,7 +11,7 @@ module.exports = function() {
   rutas.get('/usuarios/count', authController.autenticacion, usuariosController.count);
   rutas.get('/usuarios/:id', authController.autenticacion, usuariosController.byId);
   rutas.put('/usuarios/:id', authController.autenticacion, usuariosController.update);
-  rutas.post('/usuarios', authController.autenticacion, usuariosController.crear);
+  rutas.post('/usuarios', usuariosController.crear);
   rutas.delete('/usuarios/:id', authController.autenticacion, usuariosController.eliminar);
 
   return rutas;

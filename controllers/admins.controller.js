@@ -51,8 +51,12 @@ exports.crear = function (req, res) {
                      password:passwordHash.generate(req.body.password)}).then(function (admin) {
         res.status(201).send({message: 'Admin creado con exito.'});
     }).error(function(err){
-      console.log('Error occured' + err);
-      res.status(400).send({message: 'Algo va mal :('});
+        if(err.toString().indexOf('SequelizeUniqueConstraintError') > -1){
+          res.status(400).send({message: 'Este email no esta disponible.'});
+        }else{
+          res.status(400).send({message: 'Algo va mal :('});
+        }
+        console.log('Error occured' + err);
     });
 }
 
@@ -79,11 +83,11 @@ exports.login = function(req, res) {
   }).then(function(admin) {
 
     if (!admin) {
-      res.json({ success: false, message: 'autenticacion fallida.' });
+      res.status(400).json({ success: false, message: 'autenticacion fallida.' });
     } else if (admin) {
 
       if (!passwordHash.verify(req.body.password, admin.password)) {
-        res.json({ success: false, message: 'autenticacion fallida.' });
+        res.status(400).json({ success: false, message: 'autenticacion fallida.' });
       } else {
 
         var token = jwt.sign(admin, config.secret, {

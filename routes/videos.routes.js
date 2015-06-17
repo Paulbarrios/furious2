@@ -9,9 +9,11 @@ module.exports = function() {
 
   rutas.get('/videos' , authController.autenticacion, videosController.getAll);
   rutas.get('/videos/aprobados/:inicio/:cantidad' , videosController.getAllAprobados);
+  rutas.get('/videos/noaprobados/:inicio/:cantidad', authController.autenticacion , videosController.getAllNoAprobados);
   rutas.get('/videos/aprobados/count' , videosController.count);
   rutas.get('/videos/:id' , videosController.byId);
   rutas.put('/videos/:id', authController.autenticacion, videosController.update);
+  rutas.put('/videos/aprobar/:id', authController.autenticacion, videosController.aprobar);
   rutas.post('/videos', videosController.crear);
   rutas.delete('/videos/:id', authController.autenticacion, videosController.eliminar);
 

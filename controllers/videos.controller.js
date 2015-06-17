@@ -33,6 +33,17 @@ exports.getAllAprobados = function (req, res) {
     });
 }
 
+exports.getAllNoAprobados = function (req, res) {
+  console.log(req.params.inicio);
+  console.log(req.params.cantidad);
+    Videos.findAll({where: {aprobado: 0}, offset: req.params.inicio, limit: req.params.cantidad}).then(function (videos) {
+                  res.json(videos);
+    }).error(function(err){
+      console.log('Error occured' + err);
+      res.status(400).send({message: 'Algo va mal :(', err: err});
+    });
+}
+
 
 exports.byId = function (req, res) {
     Videos.findById(req.params.id).then(function (video) {
@@ -58,6 +69,21 @@ exports.update = function (req, res) {
                         descripcion:req.body.descripcion,
                         autor:req.body.autor,
                         aprobado:req.body.aprobado}).then(function (video){
+          res.status(200).send({message: 'El video se actualizo con exito'});
+        });
+      }
+    }).error(function(err){
+      console.log('Error occured' + err);
+      res.status(400).send({message: 'Algo va mal'});
+    });
+}
+
+exports.aprobar = function (req, res) {
+    Videos.findById(req.params.id).then(function (video) {
+      if(video == null){
+        res.status(404).send({message: 'El video no existe o no lo encuentro :...('});
+      }else{
+        video.updateAttributes({aprobado:1}).then(function (video){
           res.status(200).send({message: 'El video se actualizo con exito'});
         });
       }

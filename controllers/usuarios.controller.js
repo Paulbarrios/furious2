@@ -8,8 +8,13 @@ exports.getAll = function (req, res) {
     Usuarios.findAll().then(function (usuarios) {
       for(var key in usuarios){
         var d = usuarios[key].nacimiento;
-        var d1 = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
-        usuarios[key].nacimiento = d1;
+        if(d != "0000-00-00"){
+          var d1 = d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+          usuarios[key].nacimiento = d1;
+        }else{
+          usuarios[key].nacimiento = 'No disponible';
+        }
+
       }
       res.json(usuarios);
     }).error(function(err){
